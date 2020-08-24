@@ -4,10 +4,6 @@
 
 ### Tree
 
-##### 94. [Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)
-
-Similar Problems: [144](https://leetcode.com/problems/binary-tree-preorder-traversal/), [145](https://leetcode.com/problems/binary-tree-postorder-traversal/), [429](https://leetcode.com/problems/n-ary-tree-level-order-traversal/), [589](https://leetcode.com/problems/n-ary-tree-preorder-traversal/), [590](https://leetcode.com/problems/n-ary-tree-postorder-traversal/), [987](https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/), [1302](https://leetcode.com/problems/deepest-leaves-sum/)
-
 ```python
 # Definition for a binary tree node.
 # class TreeNode:
@@ -15,7 +11,15 @@ Similar Problems: [144](https://leetcode.com/problems/binary-tree-preorder-trave
 #         self.val = val
 #         self.left = left
 #         self.right = right
+```
 
+
+
+##### 94. [Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)
+
+Similar Problems: [Binary Tree Preorder Traversal](https://leetcode.com/problems/binary-tree-preorder-traversal/), [Binary Tree Postorder Traversal](https://leetcode.com/problems/binary-tree-postorder-traversal/), [N-ary Tree Level Order Traversal](https://leetcode.com/problems/n-ary-tree-level-order-traversal/), [N-ary Tree Preorder Traversal](https://leetcode.com/problems/n-ary-tree-preorder-traversal/), [N-ary Tree Postorder Traversal](https://leetcode.com/problems/n-ary-tree-postorder-traversal/), [Vertical Order Traversal of a Binary Tree](https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/), [Deepest Leaves Sum](https://leetcode.com/problems/deepest-leaves-sum/)
+
+```python
 # 94. Binary Tree Inorder Traversal
 
 # Recursive Solution
@@ -266,5 +270,118 @@ class Solution:
                     tmp.append(node.right)
             queue = tmp
         return ans
+```
+
+
+
+##### 100. [Same Tree](https://leetcode.com/problems/same-tree/)
+
+Similar Problems: [Symmetric Tree](https://leetcode.com/problems/symmetric-tree/), [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/), [Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/), [Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/), [Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/), [Univalued Binary Tree](https://leetcode.com/problems/univalued-binary-tree/)
+
+```python
+# 100. Same Tree
+
+# Recursice solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+        if not p or not q:
+            return True if not p and not q else False
+        return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+      
+# Iterative solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+        traversalP = []
+        stack = [p]
+        while stack:
+            node = stack.pop()
+            if node:
+                traversalP.append(node.val)
+                stack.append(node.right)
+                stack.append(node.left)
+            else:
+                traversalP.append(None)
+        stack = [q]
+        while stack and traversalP:
+            node = stack.pop()
+            tar = traversalP.pop(0)
+            if (not node and tar) or (node and node.val != tar):
+                return False
+            if node:
+                stack.append(node.right)
+                stack.append(node.left)
+        return stack == traversalP
+      
+# 101. Symmetric Tree
+
+# Recursive solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def isMirror(self, node1, node2):
+        if not node1 and not node2:
+            return True
+        if not node1 or not node2:
+            return False
+        return (node1.val == node2.val) and self.isMirror(node1.left, node2.right) and self.isMirror(node1.right, node2.left)
+        
+    def isSymmetric(self, root: TreeNode) -> bool:
+        return self.isMirror(root, root)
+
+# Iterative solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        queue = [root, root]
+        while queue:
+            node1 = queue.pop(0)
+            node2 = queue.pop(0)
+            if not node1 and not node2:
+                continue
+            if not node1 or not node2:
+                return False
+            if node1.val != node2.val:
+                return False
+            queue.append(node1.left)
+            queue.append(node2.right)
+            queue.append(node1.right)
+            queue.append(node2.left)
+        return True
+      
+# 104. Maximum Depth of Binary Tree
+
+# Recursive solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        return 0 if not root else max(self.maxDepth(root.left)+1, self.maxDepth(root.right)+1)
+      
+# Iterative solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        ans = 0
+        stack = [[root, 1]]
+        while stack:
+            node, depth = stack.pop()
+            if node:
+                ans = max(ans, depth)
+                stack.append([node.left, depth+1])
+                stack.append([node.right, depth+1])
+        return ans
+      
+# 110. Balanced Binary Tree
+
+# Recursive solution
+# Time: O()
+# Space: O()
+
 ```
 
