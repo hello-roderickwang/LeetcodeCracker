@@ -380,8 +380,105 @@ class Solution:
 # 110. Balanced Binary Tree
 
 # Recursive solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def isBalanced(self, root: TreeNode) -> bool:
+        ans = True
+        
+        def getDepth(node):
+            if not node:
+                return 0
+            ld = getDepth(node.left)
+            rd = getDepth(node.right)
+            if abs(ld - rd) > 1:
+                nonlocal ans
+                ans = False
+            return max(ld, rd)+1
+        
+        getDepth(root)
+        return ans
+      
+# 111. Minimum Depth of Binary Tree
+
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root: return 0
+        if not root.left and not root.right: return 1
+        ans = sys.maxsize
+        if root.left:
+            ans = min(ans, self.minDepth(root.left)+1)
+        if root.right:
+            ans = min(ans, self.minDepth(root.right)+1)
+        return ans
+      
+# 572. Subtree of Another Tree
+
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def isSameTree(self, node1, node2):
+        if not node1 and not node2: return True
+        if not node1 or not node2: return False
+        if node1.val != node2.val: return False
+        return self.isSameTree(node1.left, node2.left) and self.isSameTree(node1.right, node2.right)
+    
+    def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
+        stack = [s]
+        while stack:
+            node = stack.pop()
+            if node:
+                if node.val == t.val:
+                    if self.isSameTree(node, t):
+                        return True
+                stack.append(node.left)
+                stack.append(node.right)
+        return False
+
+      
+# 965. Univalued Binary Tree
+
+# Iterative solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def isUnivalTree(self, root: TreeNode) -> bool:
+        stack = [root]
+        tar = root.val
+        while stack:
+            node = stack.pop()
+            if node:
+                if node.val != tar:
+                    return False
+                stack.append(node.left)
+                stack.append(node.right)
+        return True
+      
+# Recursive solution
+# Time: O(N)
+# Space: O(N)
+class Solution:
+    def isUnivalTree(self, root: TreeNode) -> bool:
+        if not root: return True
+        if root.left and root.val != root.left.val:
+            return False
+        if root.right and root.val != root.right.val:
+            return False
+        return self.isUnivalTree(root.left) and self.isUnivalTree(root.right)
+```
+
+
+
+##### 102. [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+
+Similar Problems: [Binary Tree Level Order Traversal II](https://leetcode.com/problems/binary-tree-level-order-traversal-ii/), [N-ary Tree Level Order Traversal](https://leetcode.com/problems/n-ary-tree-level-order-traversal/), [Leaf-Similar Trees](https://leetcode.com/problems/leaf-similar-trees/)
+
+```python
+# 102. Binary Tree Level Order Traversal
+
 # Time: O()
 # Space: O()
-
 ```
 
